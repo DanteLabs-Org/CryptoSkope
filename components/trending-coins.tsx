@@ -1,0 +1,61 @@
+"use client"
+
+import { trendingCoins, formatCurrency, formatPercentage, getPriceChangeColor } from "@/lib/mockData"
+import { SparklineChart } from "./sparkline-chart"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { ArrowUpIcon, ArrowDownIcon } from "lucide-react"
+import Image from "next/image"
+
+export function TrendingCoins() {
+  return (
+    <Card>
+      <CardHeader className="pb-2">
+        <CardTitle className="text-lg font-medium">Trending Coins</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {trendingCoins.map((coin) => {
+            const isPositive = coin.priceChange24h > 0
+            const priceChangeColor = isPositive ? "text-green-500" : "text-red-500"
+            const Icon = isPositive ? ArrowUpIcon : ArrowDownIcon
+            
+            return (
+              <div key={coin.id} className="flex items-center gap-3 p-2 hover:bg-secondary/50 rounded-md transition-colors">
+                <div className="w-8 h-8 relative shrink-0">
+                  <Image 
+                    src={coin.iconUrl} 
+                    alt={coin.name}
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="flex justify-between">
+                    <div className="font-medium truncate">{coin.name}</div>
+                    <div className="text-right font-semibold">
+                      {formatCurrency(coin.price, 'USD', coin.price < 10 ? 4 : 2)}
+                    </div>
+                  </div>
+                  <div className="flex justify-between mt-1">
+                    <div className="text-sm text-muted-foreground">{coin.symbol}</div>
+                    <div className={`text-sm flex items-center gap-1 ${priceChangeColor}`}>
+                      <Icon className="h-3 w-3" />
+                      {formatPercentage(coin.priceChange24h)}
+                    </div>
+                  </div>
+                </div>
+                <div className="w-20 h-10">
+                  <SparklineChart 
+                    data={coin.sparkline} 
+                    color={isPositive ? "rgba(34, 197, 94, 0.7)" : "rgba(239, 68, 68, 0.7)"} 
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
