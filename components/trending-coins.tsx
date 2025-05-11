@@ -28,6 +28,10 @@ export function TrendingCoins() {
                     width={32}
                     height={32}
                     className="rounded-full"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = `https://ui-avatars.com/api/?name=${coin.symbol}&background=random`;
+                    }}
                   />
                 </div>
                 <div className="flex-1 min-w-0">

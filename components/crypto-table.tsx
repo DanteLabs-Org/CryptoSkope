@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { cryptos, formatCurrency, formatCompactNumber, formatPercentage, getPriceChangeColor } from "@/lib/mockData"
+import { formatCurrency, formatCompactNumber, formatPercentage, getPriceChangeColor } from "@/lib/mockData"
 import { SparklineChart } from "./sparkline-chart"
 import { 
   Table, 
@@ -14,13 +14,85 @@ import {
 import { ArrowUpIcon, ArrowDownIcon, ArrowUpDownIcon } from "lucide-react"
 import Image from "next/image"
 import { Button } from "./ui/button"
+import { useAutoRefresh } from "@/hooks/useAutoRefresh"
 
 type SortField = 'name' | 'price' | 'marketCap' | 'volume' | 'priceChange.24h' | null
 type SortDirection = 'asc' | 'desc'
 
+interface CoinGeckoCrypto {
+  id: string;
+  symbol: string;
+  name: string;
+  image: string;
+  current_price: number;
+  market_cap: number;
+  total_volume: number;
+  price_change_percentage_1h_in_currency: number;
+  price_change_percentage_24h_in_currency: number;
+  price_change_percentage_7d_in_currency: number;
+  sparkline_in_7d: {
+    price: number[];
+  };
+}
+
+// Real API call function
+const fetchCryptoData = async () => {
+  try {
+    const response = await fetch('/api/crypto', {
+      headers: {
+        'Accept': 'application/json',
+      },
+      next: { revalidate: 60 }, // Cache for 60 seconds
+    });
+    
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => null);
+      throw new Error(
+        errorData?.error || 
+        `Failed to fetch data: ${response.status} ${response.statusText}`
+      );
+    }
+
+    const data: CoinGeckoCrypto[] = await response.json();
+    
+    if (!Array.isArray(data) || data.length === 0) {
+      throw new Error('No data received from the API');
+    }
+    
+    // Transform the data to match our component's structure
+    return data.map(coin => ({
+      id: coin.id,
+      name: coin.name,
+      symbol: coin.symbol.toUpperCase(),
+      iconUrl: coin.image,
+      price: coin.current_price,
+      marketCap: coin.market_cap,
+      volume: coin.total_volume,
+      supply: 0, // Not provided by the API
+      priceChange: {
+        "1h": coin.price_change_percentage_1h_in_currency || 0,
+        "24h": coin.price_change_percentage_24h_in_currency || 0,
+        "7d": coin.price_change_percentage_7d_in_currency || 0
+      },
+      sparkline: coin.sparkline_in_7d?.price || []
+    }));
+  } catch (error) {
+    console.error('Error fetching crypto data:', error);
+    // If it's a rate limit error, wait and retry
+    if (error instanceof Error && error.message.includes('429')) {
+      await new Promise(resolve => setTimeout(resolve, 60000)); // Wait 60 seconds
+      return fetchCryptoData(); // Retry
+    }
+    throw error;
+  }
+};
+
 export function CryptoTable() {
   const [sortField, setSortField] = useState<SortField>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
+  
+  // Use auto-refresh hook with 60 second interval
+  const { data: cryptoData, loading, error } = useAutoRefresh(fetchCryptoData, 30000);
 
   const handleSort = (field: SortField) => {
     if (sortField === field) {
@@ -31,7 +103,7 @@ export function CryptoTable() {
     }
   }
 
-  const sortedCryptos = [...cryptos].sort((a, b) => {
+  const sortedCryptos = [...(cryptoData || [])].sort((a, b) => {
     if (!sortField) return 0
     
     let comparison = 0
@@ -51,10 +123,19 @@ export function CryptoTable() {
     return sortDirection === 'asc' ? comparison : -comparison
   })
 
+  if (loading && !cryptoData) {
+    return <div className="p-4 text-center">Loading...</div>
+  }
+
+  if (error) {
+    return <div className="p-4 text-center text-red-500">Error loading data: {error.message}</div>
+  }
+
   return (
     <div className="rounded-md border bg-card">
       <div className="p-4 flex justify-between items-center">
         <h3 className="text-lg font-medium">Cryptocurrency Prices</h3>
+        {loading && <div className="text-sm text-muted-foreground">Refreshing...</div>}
       </div>
       <div className="overflow-x-auto">
         <Table>
@@ -132,6 +213,10 @@ export function CryptoTable() {
                           width={32}
                           height={32}
                           className="rounded-full"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = `https://ui-avatars.com/api/?name=${crypto.symbol}&background=random`;
+                          }}
                         />
                       </div>
                       <div>
