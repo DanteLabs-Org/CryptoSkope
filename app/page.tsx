@@ -7,7 +7,7 @@ import { TrendingCoins } from "@/components/trending-coins"
 export default function Home() {
   return (
     <main className="min-h-screen py-6">
-      <div className="container">
+      <div className="container mx-auto max-w-7xl px-4">
         <h1 className="text-2xl font-bold mb-6">Cryptocurrency Dashboard</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -22,7 +22,6 @@ export default function Home() {
           <div className="space-y-6">
             <TrendingCoins />
             <GaugeChart />
-            <NewsFeed />
           </div>
         </div>
       </div>
