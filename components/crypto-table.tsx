@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { formatCurrency, formatCompactNumber, formatPercentage, getPriceChangeColor } from "@/lib/mockData"
+import { formatCurrency, formatCompactNumber, formatPercentage, getPriceChangeColor, Crypto } from "@/lib/mockData"
 import { SparklineChart } from "./sparkline-chart"
 import { 
   Table, 
@@ -36,7 +36,7 @@ interface CoinGeckoCrypto {
 }
 
 // Real API call function
-const fetchCryptoData = async () => {
+const fetchCryptoData = async (): Promise<Crypto[]> => {
   try {
     const response = await fetch('/api/crypto', {
       headers: {
