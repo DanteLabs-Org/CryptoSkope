@@ -26,7 +26,7 @@ export default function NewsPage() {
         if (data.status === "success" && Array.isArray(data.results)) {
           setNews(data.results);
         } else {
-          setError("Failed to fetch news articles.");
+          setError("Failed to fetch news  articles.");
         }
       } catch (err) {
         setError("Failed to fetch news articles.");
