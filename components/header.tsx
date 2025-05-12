@@ -88,7 +88,7 @@ export function Header() {
         <div className="flex items-center gap-2 md:gap-3">
           <a href="/" className="flex items-center gap-2 md:gap-3">
             <BarChart3Icon className="h-6 w-6" />
-            <span className="font-semibold text-lg hidden sm:inline-block">CryptoVision</span>
+            <span className="font-semibold text-lg hidden sm:inline-block">BlockFolio</span>
           </a>
         </div>
         

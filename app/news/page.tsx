@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { BackgroundBeams } from "@/components/ui/background-beams";
 
 interface NewsArticle {
   title: string;
@@ -38,8 +39,9 @@ export default function NewsPage() {
   }, []);
 
   return (
-    <main className="min-h-screen py-6">
-      <div className="container mx-auto max-w-7xl px-4">
+    <main className="min-h-screen py-6 relative">
+      <BackgroundBeams />
+      <div className="container mx-auto max-w-7xl px-4 relative z-10">
         <h1 className="text-2xl font-bold mb-6">Latest Crypto News</h1>
         {loading && <div className="p-4 text-center">Loading news...</div>}
         {error && <div className="p-4 text-center text-red-500">{error}</div>}

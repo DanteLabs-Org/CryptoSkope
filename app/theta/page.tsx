@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createChart, ColorType, UTCTimestamp } from 'lightweight-charts';
+import { BackgroundBeams } from "@/components/ui/background-beams";
 
 interface Token {
   id: string;
@@ -147,8 +148,9 @@ export default function ThetaPage() {
   }
 
   return (
-    <main className="min-h-screen py-6">
-      <div className="container mx-auto max-w-7xl px-4">
+    <main className="min-h-screen py-6 relative">
+      <BackgroundBeams />
+      <div className="container mx-auto max-w-7xl px-4 relative z-10">
         <h1 className="text-2xl font-bold mb-6">Theta Ecosystem Tokens</h1>
         
         {loading && <div className="p-4 text-center">Loading tokens...</div>}
