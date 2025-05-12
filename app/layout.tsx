@@ -7,7 +7,7 @@ import { Header } from '@/components/header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CryptoVision - Cryptocurrency Dashboard',
+  title: 'CryptoSkope - Cryptocurrency Dashboard',
   description: 'Track crypto prices, market stats, and news in real-time',
 }
 
