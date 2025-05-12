@@ -137,10 +137,6 @@ export function Header() {
           
           <div className="flex items-center gap-1 md:gap-2">
             <Button size="icon" variant="ghost" className="rounded-full">
-              <GlobeIcon className="h-5 w-5" />
-              <span className="sr-only">Language</span>
-            </Button>
-            <Button size="icon" variant="ghost" className="rounded-full">
               <BellIcon className="h-5 w-5" />
               <span className="sr-only">Notifications</span>
             </Button>

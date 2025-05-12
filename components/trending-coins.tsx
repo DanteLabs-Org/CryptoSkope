@@ -6,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { ArrowUpIcon, ArrowDownIcon } from "lucide-react"
 import Image from "next/image"
 import { useAutoRefresh } from "@/hooks/useAutoRefresh"
+import { CoinDetailsDrawer } from "./coin-details-drawer"
+import { useState } from "react"
 
 interface TrendingCoinItem {
   id: string;
@@ -76,6 +78,7 @@ const fetchTrendingData = async (): Promise<TrendingCoinItem[]> => {
 
 export function TrendingCoins() {
   const { data: trendingCoins, loading, error } = useAutoRefresh(fetchTrendingData, 30000);
+  const [selectedCoinId, setSelectedCoinId] = useState<string | null>(null);
 
   if (loading && !trendingCoins) {
     return (
@@ -116,7 +119,11 @@ export function TrendingCoins() {
             const Icon = isPositive ? ArrowUpIcon : ArrowDownIcon
             
             return (
-              <div key={coin.id} className="flex items-center gap-3 p-2 hover:bg-secondary/50 rounded-md transition-colors">
+              <div 
+                key={coin.id} 
+                className="flex items-center gap-3 p-2 hover:bg-secondary/50 rounded-md transition-colors cursor-pointer"
+                onClick={() => setSelectedCoinId(coin.id)}
+              >
                 <div className="w-8 h-8 relative shrink-0">
                   <Image 
                     src={coin.thumb} 
@@ -159,6 +166,10 @@ export function TrendingCoins() {
           })}
         </div>
       </CardContent>
+      <CoinDetailsDrawer 
+        coinId={selectedCoinId} 
+        onClose={() => setSelectedCoinId(null)} 
+      />
     </Card>
   )
 }

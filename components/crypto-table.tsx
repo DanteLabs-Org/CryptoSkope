@@ -15,6 +15,7 @@ import { ArrowUpIcon, ArrowDownIcon, ArrowUpDownIcon } from "lucide-react"
 import Image from "next/image"
 import { Button } from "./ui/button"
 import { useAutoRefresh } from "@/hooks/useAutoRefresh"
+import { CoinDetailsDrawer } from "./coin-details-drawer"
 
 type SortField = 'name' | 'price' | 'marketCap' | 'volume' | 'priceChange.24h' | null
 type SortDirection = 'asc' | 'desc'
@@ -90,6 +91,7 @@ const fetchCryptoData = async (): Promise<Crypto[]> => {
 export function CryptoTable() {
   const [sortField, setSortField] = useState<SortField>(null)
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc')
+  const [selectedCoinId, setSelectedCoinId] = useState<string | null>(null)
   
   // Use auto-refresh hook with 60 second interval
   const { data: cryptoData, loading, error } = useAutoRefresh(fetchCryptoData, 30000);
@@ -202,7 +204,11 @@ export function CryptoTable() {
               const Icon = isPositive ? ArrowUpIcon : ArrowDownIcon
               
               return (
-                <TableRow key={crypto.id} className="hover:bg-muted/50">
+                <TableRow 
+                  key={crypto.id} 
+                  className="hover:bg-muted/50 cursor-pointer"
+                  onClick={() => setSelectedCoinId(crypto.id)}
+                >
                   <TableCell className="font-medium">{index + 1}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-2">
@@ -252,6 +258,10 @@ export function CryptoTable() {
           </TableBody>
         </Table>
       </div>
+      <CoinDetailsDrawer 
+        coinId={selectedCoinId} 
+        onClose={() => setSelectedCoinId(null)} 
+      />
     </div>
   )
 }
