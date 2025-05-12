@@ -1,6 +1,17 @@
+'use client'
+
 import { formatCompactNumber, formatPercentage, marketStats } from "@/lib/mockData"
+import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts"
+
+const PIE_COLORS = ["#F7931A", "#627EEA", "#8884d8"] // BTC orange, ETH blue, Others purple
 
 export function MarketStats() {
+  const marketDistributionData = [
+    { name: "BTC", value: marketStats.btcDominance },
+    { name: "ETH", value: marketStats.ethDominance },
+    { name: "Others", value: 100 - marketStats.btcDominance - marketStats.ethDominance }
+  ]
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <div className="bg-card rounded-lg p-4 shadow">
@@ -41,32 +52,46 @@ export function MarketStats() {
 
       <div className="bg-card rounded-lg p-4 shadow md:col-span-2 lg:col-span-1">
         <h3 className="text-lg font-medium mb-3">Market Distribution</h3>
-        <div className="flex items-center gap-3 mt-6">
-          <div className="h-8 flex-1 bg-chart-1/20 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-chart-1 rounded-full" 
-              style={{ width: `${marketStats.btcDominance}%` }}
-            ></div>
+        <div className="h-[260px] flex flex-col items-center justify-center">
+          <ResponsiveContainer width="100%" height={140}>
+            <PieChart>
+              <Pie
+                data={marketDistributionData}
+                cx="50%"
+                cy="50%"
+                innerRadius={50}
+                outerRadius={60}
+                paddingAngle={2}
+                dataKey="value"
+              >
+                {marketDistributionData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={PIE_COLORS[index % PIE_COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip 
+                formatter={(value: number) => `${value.toFixed(1)}%`}
+                contentStyle={{ 
+                  backgroundColor: 'var(--background)',
+                  border: '1px solid var(--border)',
+                  borderRadius: '6px',
+                  padding: '8px'
+                }}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+          <div className="mt-2 w-full flex justify-center">
+            <Legend
+              layout="horizontal"
+              align="center"
+              verticalAlign="bottom"
+              iconType="circle"
+              formatter={(value) => {
+                const item = marketDistributionData.find(d => d.name === value)
+                return `${value} (${item?.value.toFixed(1)}%)`
+              }}
+              wrapperStyle={{ position: 'static' }}
+            />
           </div>
-          <span className="text-sm font-medium">BTC</span>
-        </div>
-        <div className="flex items-center gap-3 mt-3">
-          <div className="h-8 flex-1 bg-chart-2/20 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-chart-2 rounded-full" 
-              style={{ width: `${marketStats.ethDominance}%` }}
-            ></div>
-          </div>
-          <span className="text-sm font-medium">ETH</span>
-        </div>
-        <div className="flex items-center gap-3 mt-3">
-          <div className="h-8 flex-1 bg-chart-3/20 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-chart-3 rounded-full" 
-              style={{ width: `${100 - marketStats.btcDominance - marketStats.ethDominance}%` }}
-            ></div>
-          </div>
-          <span className="text-sm font-medium">Others</span>
         </div>
       </div>
     </div>
