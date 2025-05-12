@@ -15,7 +15,7 @@ export async function GET() {
     if (!response.ok) {
       const errorData = await response.json().catch(() => null);
       return NextResponse.json(
-        { error: errorData?.error || `Failed to fetch data: ${response.status} ${response.statusText}` },
+        { error: errorData?.error || `Failed to  fetch data: ${response.status} ${response.statusText}` },
         { status: response.status }
       );
     }
