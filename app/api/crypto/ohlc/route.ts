@@ -34,9 +34,8 @@ export async function GET(request: Request) {
       }
       
       retries++;
-      if (retries < 3) {
-        await sleep(2000); // Sleep for 2 seconds before retrying
-      }
+      // Always retry after 2 seconds if we hit rate limit
+      await sleep(2000);
     }
 
     if (!response) {
