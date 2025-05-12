@@ -9,6 +9,24 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'CryptoSkope - Cryptocurrency Dashboard',
   description: 'Track crypto prices, market stats, and news in real-time',
+  icons: {
+    icon: '/logo.png',
+    shortcut: '/logo.png',
+    apple: '/logo.png',
+  },
+  openGraph: {
+    title: 'CryptoSkope - Cryptocurrency Dashboard',
+    description: 'Track crypto prices, market stats, and news in real-time',
+    images: ['/logo.png'],
+    type: 'website',
+    url: 'https://cryptoskope.com',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'CryptoSkope - Cryptocurrency Dashboard',
+    description: 'Track crypto prices, market stats, and news in real-time',
+    images: ['/logo.png'],
+  },
 }
 
 export default function RootLayout({
