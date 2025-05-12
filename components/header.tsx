@@ -100,6 +100,9 @@ export function Header() {
             <a href="/news" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
               News
             </a>
+            <a href="/theta" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
+              Theta
+            </a>
           </div>
         </nav>
 
