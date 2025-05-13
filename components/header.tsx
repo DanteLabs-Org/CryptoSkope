@@ -190,17 +190,7 @@ export function Header() {
                 />
                 <span className="sr-only">Sign out</span>
               </Button>
-            ) : (
-              <Button 
-                size="icon" 
-                variant="ghost" 
-                className="rounded-full"
-                onClick={() => signIn("google")}
-              >
-                <UserRoundIcon className="h-5 w-5" />
-                <span className="sr-only">Sign in with Google</span>
-              </Button>
-            )}
+            ) : null}
           </div>
         </div>
         
