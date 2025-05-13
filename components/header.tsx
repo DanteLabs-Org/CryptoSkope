@@ -117,6 +117,9 @@ export function Header() {
             <a href="/theta" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
               Theta
             </a>
+            <a href="/coin/wtfuel" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
+              DexCharts
+            </a>
           </div>
         </nav>
 
