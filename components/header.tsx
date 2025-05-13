@@ -11,7 +11,9 @@ import {
   Search, 
   UserRoundIcon, 
   WalletIcon,
-  LogOutIcon
+  LogOutIcon,
+  GithubIcon,
+  TwitterIcon
 } from "lucide-react"
 import { Input } from "./ui/input"
 import { useState, useRef } from "react"
@@ -108,17 +110,14 @@ export function Header() {
         
         <nav className="hidden md:flex items-center gap-6 flex-1">
           <div className="flex items-center gap-6">
-            <a href="/" className="text-sm font-medium transition-colors hover:text-primary">
-              Dashboard
+            <a href="/theta" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
+              Theta OHLC
+            </a>
+            <a href="/coin/dex" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
+              DEX Explorer
             </a>
             <a href="/news" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
               News
-            </a>
-            <a href="/theta" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
-              Theta
-            </a>
-            <a href="/coin/wtfuel" className="text-sm font-medium transition-colors text-muted-foreground hover:text-primary">
-              DexCharts
             </a>
           </div>
         </nav>
@@ -199,7 +198,7 @@ export function Header() {
                 onClick={() => signIn("google")}
               >
                 <UserRoundIcon className="h-5 w-5" />
-                <span className="sr-only">Sign in</span>
+                <span className="sr-only">Sign in with Google</span>
               </Button>
             )}
           </div>

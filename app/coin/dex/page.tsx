@@ -111,13 +111,16 @@ export default function WTFUELPage() {
                             <CardHeader>
                                 <CardTitle>
                                     {selectedToken ? `${selectedToken.name} (${selectedToken.symbol})` : 'Select a token'}
+                                    <span className="ml-3 px-2 py-1 text-xs rounded bg-blue-900 text-blue-200 border border-blue-400 align-middle">DEX Integration</span>
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <ThetaDexPriceFeed onPriceUpdate={setPrice} />
                             </CardContent>
                         </Card>
-                        <ThetaChainStatus />
+                        <div className="mt-4">
+                            <ThetaChainStatus />
+                        </div>
                     </div>
                 </div>
             </div>
