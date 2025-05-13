@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
   title: 'CryptoSkope - Your Crypto Dashboard',
-  description: 'Track your favorite cryptocurrencies, get real-time market data, and stay updated with the latest crypto news.',
+  description: 'Track and analyze cryptocurrency prices, trends, and market data in real-time.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'CryptoSkope - Your Crypto Dashboard',
-    description: 'Track your favorite cryptocurrencies, get real-time market data, and stay updated with the latest crypto news.',
+    description: 'Track and analyze cryptocurrency prices, trends, and market data in real-time.',
     images: [
       {
         url: '/og-image.png',
@@ -27,15 +27,15 @@ export const metadata: Metadata = {
         alt: 'CryptoSkope Dashboard Preview'
       }
     ],
-    type: 'website',
     url: 'https://cryptoskope.com',
+    siteName: 'CryptoSkope',
   },
   twitter: {
     card: 'summary_large_image',
     site: '@CryptoSkope',
     title: 'CryptoSkope - Your Crypto Dashboard',
-    description: 'Track your favorite cryptocurrencies, get real-time market data, and stay updated with the latest crypto news.',
-    images: ['/og-image.png']
+    description: 'Track and analyze cryptocurrency prices, trends, and market data in real-time.',
+    images: ['/og-image.png'],
   },
 }
 

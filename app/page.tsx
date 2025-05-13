@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <main className="min-h-screen py-6 relative">
       <BackgroundBeams />
-      <div className="container mx-auto max-w-[1920px] px-2 relative z-10">
+      <div className="container mx-auto max-w-[1920px] px-4 relative z-10">
         <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
         
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
