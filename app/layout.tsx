@@ -7,25 +7,34 @@ import { Header } from '@/components/header'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'CryptoSkope - Cryptocurrency Dashboard',
-  description: 'Track crypto prices, market stats, and news in real-time',
+  metadataBase: new URL('http://localhost:3000'),
+  title: 'CryptoSkope - Your Crypto Dashboard',
+  description: 'Track your favorite cryptocurrencies, get real-time market data, and stay updated with the latest crypto news.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
     apple: '/logo.png',
   },
   openGraph: {
-    title: 'CryptoSkope - Cryptocurrency Dashboard',
-    description: 'Track crypto prices, market stats, and news in real-time',
-    images: ['/logo.png'],
+    title: 'CryptoSkope - Your Crypto Dashboard',
+    description: 'Track your favorite cryptocurrencies, get real-time market data, and stay updated with the latest crypto news.',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'CryptoSkope Dashboard Preview'
+      }
+    ],
     type: 'website',
     url: 'https://cryptoskope.com',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CryptoSkope - Cryptocurrency Dashboard',
-    description: 'Track crypto prices, market stats, and news in real-time',
-    images: ['/logo.png'],
+    site: '@CryptoSkope',
+    title: 'CryptoSkope - Your Crypto Dashboard',
+    description: 'Track your favorite cryptocurrencies, get real-time market data, and stay updated with the latest crypto news.',
+    images: ['/og-image.png']
   },
 }
 

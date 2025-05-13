@@ -17,6 +17,8 @@ import { useState, useRef } from "react"
 import { useRouter } from "next/navigation"
 import { cryptos } from "@/lib/mockData"
 import React from "react"
+import { useWallet } from "@/hooks/useWallet"
+import { WalletPopup } from "./wallet-popup"
 
 export function Header() {
   const [search, setSearch] = useState("");
@@ -24,6 +26,7 @@ export function Header() {
   const [highlighted, setHighlighted] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
+  const { account, isConnecting, error, connectWallet, toggleWalletMenu, isOpen } = useWallet();
 
   const filtered = search.trim()
     ? cryptos.filter(c =>
@@ -69,6 +72,14 @@ export function Header() {
   const handleSuggestionClick = (id: string) => {
     window.open(`https://www.coingecko.com/en/coins/${id}`, "_blank");
     setShowSuggestions(false);
+  };
+
+  const handleWalletClick = () => {
+    if (account) {
+      toggleWalletMenu();
+    } else {
+      connectWallet();
+    }
   };
 
   // Hide suggestions when clicking outside
@@ -143,10 +154,26 @@ export function Header() {
               <BellIcon className="h-5 w-5" />
               <span className="sr-only">Notifications</span>
             </Button>
-            <Button size="sm" variant="outline" className="rounded-full flex items-center gap-2 px-3">
-              <WalletIcon className="h-5 w-5" />
-              <span>Connect Wallet</span>
-            </Button>
+            <div className="relative">
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="rounded-full flex items-center gap-2 px-3"
+                onClick={handleWalletClick}
+                disabled={isConnecting}
+              >
+                <WalletIcon className="h-5 w-5" />
+                <span>
+                  {isConnecting 
+                    ? "Connecting..." 
+                    : account 
+                      ? `${account.slice(0, 6)}...${account.slice(-4)}`
+                      : "Connect Wallet"
+                  }
+                </span>
+              </Button>
+              {isOpen && <WalletPopup />}
+            </div>
             <ThemeToggle />
             <Button size="icon" variant="ghost" className="rounded-full">
               <UserRoundIcon className="h-5 w-5" />
