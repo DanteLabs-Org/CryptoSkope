@@ -9,16 +9,16 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   metadataBase: new URL('http://localhost:3000'),
-  title: 'CryptoSkope - Your Crypto Dashboard',
-  description: 'Track and analyze cryptocurrency prices, trends, and market data in real-time.',
+  title: 'CryptoSkope - Your ThetaChain & Crypto Dashboard',
+  description: 'Track and analyze crypto prices with real-time OHLC charts, wallet integration, and live DEX data.',
   icons: {
     icon: '/logo.png',
     shortcut: '/logo.png',
     apple: '/logo.png',
   },
   openGraph: {
-    title: 'CryptoSkope - Your Crypto Dashboard',
-    description: 'Track and analyze cryptocurrency prices, trends, and market data in real-time.',
+    title: 'CryptoSkope - Your ThetaChain & Crypto Dashboard',
+    description: 'Track and analyze crypto prices with real-time OHLC charts, wallet integration, and live DEX data.',
     images: [
       {
         url: '/og-image.png',
@@ -33,8 +33,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     site: '@CryptoSkope',
-    title: 'CryptoSkope - Your Crypto Dashboard',
-    description: 'Track and analyze cryptocurrency prices, trends, and market data in real-time.',
+    title: 'CryptoSkope - Your ThetaChain & Crypto Dashboard',
+    description: 'Track and analyze crypto prices with real-time OHLC charts, wallet integration, and live DEX data.',
     images: ['/og-image.png'],
   },
 }
