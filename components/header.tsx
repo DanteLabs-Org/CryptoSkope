@@ -10,7 +10,8 @@ import {
   LayoutGridIcon, 
   Search, 
   UserRoundIcon, 
-  WalletIcon
+  WalletIcon,
+  LogOutIcon
 } from "lucide-react"
 import { Input } from "./ui/input"
 import { useState, useRef } from "react"
@@ -19,6 +20,7 @@ import { cryptos } from "@/lib/mockData"
 import React from "react"
 import { useWallet } from "@/hooks/useWallet"
 import { WalletPopup } from "./wallet-popup"
+import { signIn, signOut, useSession } from "next-auth/react"
 
 export function Header() {
   const [search, setSearch] = useState("");
@@ -27,6 +29,7 @@ export function Header() {
   const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const { account, isConnecting, error, connectWallet, toggleWalletMenu, isOpen } = useWallet();
+  const { data: session } = useSession();
 
   const filtered = search.trim()
     ? cryptos.filter(c =>
@@ -150,10 +153,6 @@ export function Header() {
           </div>
           
           <div className="flex items-center gap-1 md:gap-2">
-            <Button size="icon" variant="ghost" className="rounded-full">
-              <BellIcon className="h-5 w-5" />
-              <span className="sr-only">Notifications</span>
-            </Button>
             <div className="relative">
               <Button 
                 size="sm" 
@@ -175,10 +174,31 @@ export function Header() {
               {isOpen && <WalletPopup />}
             </div>
             <ThemeToggle />
-            <Button size="icon" variant="ghost" className="rounded-full">
-              <UserRoundIcon className="h-5 w-5" />
-              <span className="sr-only">Account</span>
-            </Button>
+            {session ? (
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                className="rounded-full"
+                onClick={() => signOut()}
+              >
+                <img
+                  src={session.user?.image || ""}
+                  alt={session.user?.name || ""}
+                  className="w-6 h-6 rounded-full"
+                />
+                <span className="sr-only">Sign out</span>
+              </Button>
+            ) : (
+              <Button 
+                size="icon" 
+                variant="ghost" 
+                className="rounded-full"
+                onClick={() => signIn("google")}
+              >
+                <UserRoundIcon className="h-5 w-5" />
+                <span className="sr-only">Sign in</span>
+              </Button>
+            )}
           </div>
         </div>
         
